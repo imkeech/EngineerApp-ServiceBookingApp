@@ -90,7 +90,7 @@ class wrk_Fragment : Fragment() {
                     if (ph_no != null) {
                         fetchCustomerDetails(ph_no) { customerDetails ->
                             // Create a CardView for each data item including customer details
-                            val cardView = createCardView(document, customerDetails)
+                            val cardView = createCardView(document, customerDetails, ph_no)
 
                             // Create a LinearLayout to wrap the CardView and add margin
                             val cardContainerItem = createCardContainerItem(cardView)
@@ -127,7 +127,8 @@ class wrk_Fragment : Fragment() {
 
     private fun createCardView(
         document: DocumentSnapshot,
-        customerDetails: DocumentSnapshot?
+        customerDetails: DocumentSnapshot?,
+        customerPhone: String
     ): View {
         // Inflate the card_service_booking.xml layout
         val cardView = layoutInflater.inflate(R.layout.card_service_booking, null) as CardView
@@ -150,8 +151,8 @@ class wrk_Fragment : Fragment() {
         val workdone = cardView.findViewById<CardView>(R.id.dropdownWorkdone)
 
 
-
-        textViewServiceId.text = "Service ID: ${document.getString("serviceId")}"
+        val serviceId =document.getString("serviceId").orEmpty();
+        textViewServiceId.text = "Service ID: ${serviceId}"
         textViewModelId.text = "Model ID: ${document.getString("modelId")}"
         textViewPhNo.text = "Phone Number: ${document.getString("ph_no")}"
         textViewProblems.text = "Problems: ${document.getString("problems")}"
@@ -198,9 +199,7 @@ class wrk_Fragment : Fragment() {
                     val selectedStatus = status.selectedItem.toString()
 
                     Log.d("selectedStatus", selectedStatus)
-
-
-
+                    var shouldSendNotification = false;
                     if (selectedStatus=="On Hold") {
                         drop.visibility= View.VISIBLE
                         observation.visibility = View.VISIBLE
@@ -208,15 +207,15 @@ class wrk_Fragment : Fragment() {
                         BILL.visibility =View.VISIBLE
                         reason.visibility =View.GONE
                         workdone.visibility= View.GONE
-
-                    }else if (selectedStatus == "Cancled"){
+                        shouldSendNotification = true;
+                    }else if (selectedStatus == "Cancelled"){
                         drop.visibility= View.VISIBLE
                         observation.visibility = View.VISIBLE
                         reason.visibility =View.VISIBLE
                         BILL.visibility =View.VISIBLE
                         spareNeeded.visibility =View.GONE
                         workdone.visibility= View.GONE
-
+                        shouldSendNotification = true;
                     }else if (selectedStatus =="Completed"){
                         drop.visibility= View.VISIBLE
                         observation.visibility = View.VISIBLE
@@ -231,11 +230,12 @@ class wrk_Fragment : Fragment() {
                         BILL.visibility =View.GONE
                         reason.visibility =View.GONE
                         workdone.visibility= View.GONE
-
                     }
 
 
-
+                    if (shouldSendNotification) {
+                        cloudMessaging.sendCallUpdateNotification(selectedStatus, serviceId, customerPhone)
+                    }
 
                     observation.setOnClickListener{
                         val o = cardView.findViewById<LinearLayout>(R.id.observation)

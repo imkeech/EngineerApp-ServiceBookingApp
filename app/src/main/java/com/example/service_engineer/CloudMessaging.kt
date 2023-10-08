@@ -17,8 +17,19 @@ class CloudMessaging {
     private val httpClient = okhttp3.OkHttpClient()
     private val notifDbRef = Firebase.firestore.collection("notifications")
 
+    fun sendCallUpdateNotification(status: String, serviceId: String, customerPhone: String) {
+        val customerData = mapOf("type" to "statusUpdate", "status" to status, "phone" to customerPhone, "toApp" to "customer");
+        val managerData = mapOf("type" to "statusUpdate", "status" to status, "serviceId" to serviceId, "toApp" to "manager");
+        sendMessage(customerData);
+        sendMessage(managerData);
+    }
+
     fun sendCloudMessage(phoneNumber: String, title:String, message: String) {
         val data = mapOf("phone" to phoneNumber, "description" to message, "title" to title, "app" to "Engineer")
+        sendMessage(data)
+    }
+
+    private fun sendMessage(data: Map<String, String>) {
         val payloadObj = mapOf("to" to "/topics/booking", "data" to data)
         val payload = JSONObject(payloadObj).toString()
 
