@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Define card elevation -->
+    <dimen name="card_elevation">4dp</dimen>
+
+    <!-- Define card margin -->
+    <dimen name="card_margin">10dp</dimen>
+
+    <dimen name="card_spacing">10dp</dimen>
+
+</resources>

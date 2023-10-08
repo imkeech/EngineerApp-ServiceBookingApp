@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">service_engineer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="Status">
+        <item>Choose</item>
+        <item>On Hold</item>
+        <item>Cancled</item>
+        <item>Completed</item>
+    </string-array>
+
+    <string-array name="Spare">
+        <item>Spare 1</item>
+        <item>Spare 2</item>
+        <item>Spare 3</item>
+        <item>Spare 4</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="serviceCharge">
+        <item> Local 500 + 18%</item>
+        <item>Outside - 1000+18%</item>
+    </string-array>
+
+</resources>

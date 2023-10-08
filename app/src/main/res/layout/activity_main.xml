@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/prjtred"
+    tools:context=".MainActivity"
+    android:gravity="center"
+    android:background="@color/white">
+
+  <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="15dp"
+      android:padding="15dp"
+      android:background="@drawable/background"
+      >
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/imglogo"
+          android:layout_marginTop="10dp"
+          app:srcCompat="@drawable/logo"
+          android:maxWidth="180dp"
+          android:adjustViewBounds="true"
+          android:layout_centerHorizontal="true"/>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:id="@+id/text"
+          android:layout_marginTop="20dp"
+          android:text="Karunambigai Info System and Services"
+          android:textAlignment="center"
+          android:textSize="20dp"
+          android:textColor="@color/prjtred"
+          android:layout_below="@+id/imglogo"
+          android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+          />
+
+      <Button
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/loginbut"
+          android:text="Login"
+          android:textColor="@color/white"
+          android:layout_marginTop="10dp"
+          android:layout_below="@+id/rl1"
+          android:layout_marginLeft="70dp"
+          android:layout_marginRight="70dp"
+          android:backgroundTint="@color/prjtred"/>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/text"
+          android:padding="15dp"
+          android:id="@+id/rl1"
+          android:elevation="10dp">
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/head_login"
+           android:textColor="@color/black"
+           android:textSize="15dp"
+           android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+           android:textAlignment="center"
+           android:text="Please Enter your login details"
+
+           />
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/service_id"
+              android:layout_below="@+id/head_login"
+              android:text="Service Id*"
+              android:textColor="@color/black"
+              android:textSize="16sp"
+              android:padding="6dp"
+              android:layout_marginTop="20dp"
+               />
+          <EditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/service_id1"
+              android:layout_below="@+id/service_id"
+              android:hint="Enter Your Service Id"
+              android:padding="6dp"
+              android:textColor="@color/black"
+              android:background="@drawable/border"
+              android:textColorHint="@color/grey"
+              android:inputType="textAutoComplete"
+              />
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/service_pw"
+              android:layout_below="@+id/service_id1"
+              android:text="Password*"
+              android:textColor="@color/black"
+              android:textSize="16sp"
+              android:padding="6dp"
+              android:layout_marginTop="20dp"
+              />
+          <EditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/service_pw1"
+              android:layout_below="@+id/service_pw"
+              android:textColor="@color/black"
+              android:hint="Enter Your Password"
+              android:padding="6dp"
+              android:textColorHint="@color/grey"
+              android:background="@drawable/border"
+              android:inputType="textPassword"
+              />
+      </RelativeLayout>
+
+
+  </RelativeLayout>
+
+</LinearLayout>
