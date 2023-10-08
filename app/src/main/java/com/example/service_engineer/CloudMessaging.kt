@@ -18,8 +18,8 @@ class CloudMessaging {
     private val notifDbRef = Firebase.firestore.collection("notifications")
 
     fun sendCallUpdateNotification(status: String, serviceId: String, customerPhone: String) {
-        val customerData = mapOf("status" to status, "phone" to customerPhone, "toApp" to "customer");
-        val managerData = mapOf("status" to status, "serviceId" to serviceId, "toApp" to "manager");
+        val customerData = mapOf("type" to "statusUpdate", "status" to status, "phone" to customerPhone, "toApp" to "customer");
+        val managerData = mapOf("type" to "statusUpdate", "status" to status, "serviceId" to serviceId, "toApp" to "manager");
         sendMessage(customerData);
         sendMessage(managerData);
     }
