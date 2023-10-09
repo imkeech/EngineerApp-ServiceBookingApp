@@ -16,7 +16,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class FirebasePushMessageHandler : FirebaseMessagingService() {
-    private val CHANNEL_ID = "engineer-notification"
+    private val CHANNEL_ID = "engineer-notification2"
 
     override fun onNewToken(token: String) {
         Log.d("fcm", "New Token: $token")
