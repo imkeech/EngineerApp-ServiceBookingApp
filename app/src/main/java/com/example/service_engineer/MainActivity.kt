@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -19,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
+import fragment.profileFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var serviceid: EditText
@@ -67,12 +67,19 @@ class MainActivity : AppCompatActivity() {
 
                 if (password == storedPassword) {
                     // Successful login
+                    val name = document.getString("name")
+                    val phoneNumber = document.getString("phoneNumber")
+
+                    // Now 'name' and 'phoneNumber' contain the service engineer's information
+                    Log.d("ServiceEngineer", "Name: $name, PhoneNumber: $phoneNumber")
+
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
 
                     val editor = sharedPref.edit()
-                    // Pass the email as an extra
                     editor.putString("loggedInServiceEngineerId", email)
-                    editor.commit()
+                    editor.putString("name", name)
+                    editor.putString("phoneNumber", phoneNumber)
+                    editor.apply()
 
                     // Start MainActivity2
                     checkAuth()
@@ -139,6 +146,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }

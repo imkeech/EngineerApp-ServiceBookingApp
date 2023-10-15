@@ -5,42 +5,43 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.example.service_engineer.MainActivity
 import com.example.service_engineer.R
 import com.google.firebase.messaging.FirebaseMessagingService
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [profileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class profileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
+    // Declare EditText variable
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
 
-    private fun logout() {
+    override fun onResume() {
+        super.onResume()
 
-        //for getting
+
+
+
+    }
+
+    private fun logout() {
         val sharedPref = activity?.getSharedPreferences("login-data", Context.MODE_PRIVATE)
         Log.d("logout", "Logging out the user")
         if (sharedPref == null) {
@@ -58,8 +59,21 @@ class profileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val fragmentView =  inflater.inflate(R.layout.fragment_profile, container, false)
+        val fragmentView = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        // Retrieve data from SharedPreferences
+        val sharedPrefs = activity?.getSharedPreferences("login-data", Context.MODE_PRIVATE)
+        val name = sharedPrefs?.getString("name", "")
+        val phonenumber1 = sharedPrefs?.getString("phoneNumber", "")
+        Log.d("variable", "Name: $name  PhoneNumber: $phonenumber1")
+        // Initialize the EditText variable
+        var profileName = fragmentView.findViewById<TextView>(R.id.profileName)
+        var phonenumber = fragmentView.findViewById<TextView>(R.id.ph_no)
+        profileName.text = name
+        phonenumber.text = phonenumber1
+
+
+
         val logoutImage = fragmentView.findViewById<ImageView>(R.id.logout)
         if (logoutImage == null) {
             Log.d("logout", "image is not inflated")
@@ -67,19 +81,11 @@ class profileFragment : Fragment() {
         logoutImage?.setOnClickListener {
             logout()
         }
+
         return fragmentView
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment profileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             profileFragment().apply {
