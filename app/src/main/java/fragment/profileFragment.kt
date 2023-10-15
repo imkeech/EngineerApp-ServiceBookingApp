@@ -61,7 +61,7 @@ class profileFragment : Fragment() {
     ): View? {
         val fragmentView = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        // Retrieve data from SharedPreferences
+
         val sharedPrefs = activity?.getSharedPreferences("login-data", Context.MODE_PRIVATE)
         val name = sharedPrefs?.getString("name", "")
         val phonenumber1 = sharedPrefs?.getString("phoneNumber", "")
