@@ -6,9 +6,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -16,9 +14,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
+import fragment.profileFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var serviceid: EditText
@@ -42,7 +40,24 @@ class MainActivity : AppCompatActivity() {
             val email = serviceid.text.toString()
             val password = servicepw.text.toString()
 
+            val bundle = Bundle()
+            bundle.putString("key", email)
+
+            val fragment = profileFragment() // Replace with the actual name of your Fragment
+            fragment.arguments = bundle
+
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, fragment) // Replace "fragment_container" with the actual container view ID
+            transaction.addToBackStack(null) // Optional: Add to the back stack if needed
+            transaction.commit()
+
+
+            val sharedPref = getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
+            sharedPref.edit().putString("engineer_id", email).apply()
+
+
             if (email.isNotEmpty() && password.isNotEmpty()) {
+
                 checkServiceCredentials(email, password)
             } else {
                 Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show()
