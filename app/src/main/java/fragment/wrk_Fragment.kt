@@ -320,7 +320,7 @@ class wrk_Fragment : Fragment() {
                         val invoiceNoValue1 = cardView.findViewById<EditText>(R.id.invoiceNo)
                         val invoiceBillAmountValue1 = cardView.findViewById<EditText>(R.id.invoiceBillAmount)
 
-                        val serviceId = document.getString("serviceId")
+                        val serviceId = document.getString("serviceId") ?: ""
                         val customer_phno = document.getString("ph_no")
                         val currentEngineerId = email
                         val selectedStatus = status.selectedItem.toString()
@@ -425,8 +425,7 @@ class wrk_Fragment : Fragment() {
                             }
                         Log.d("ph_no","$customer_phno")
 
-                        cloudMessaging.sendCloudMessage("$customer_phno", "Call $selectedStatus ", "Your call is $selectedStatus")
-
+                        cloudMessaging.sendCallUpdateNotification(selectedStatus, serviceId, customerPhone);
                     }
 
 

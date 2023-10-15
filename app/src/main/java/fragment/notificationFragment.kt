@@ -6,9 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.example.service_engineer.CloudMessaging
 import com.example.service_engineer.R
 import androidx.fragment.app.activityViewModels
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessagingService
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,11 +30,12 @@ class notificationFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private val cloudMessaging = CloudMessaging()
 
+    private val notifDbRef = Firebase.firestore.collection("engineer-notifications")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -40,7 +46,6 @@ class notificationFragment : Fragment() {
         super.onResume()
         val selectedStatus = arguments?.getString("selectedStatus")
         Log.d("notificationselected","$selectedStatus")
-        //cloudMessaging.sendCloudMessage("+918825437075", "Call closed", "Engineer Hold")
     }
 
     override fun onCreateView(
@@ -48,10 +53,29 @@ class notificationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false)
 
-        return view
+        val sharedPref = activity?.getSharedPreferences("login-data", FirebaseMessagingService.MODE_PRIVATE)
 
+        val loggedInId = sharedPref?.getString("loggedInServiceEngineerId", "") ?: return null
+
+        val fragmentView =  inflater.inflate(R.layout.fragment_notification, container, false)
+
+        val linearLayout = fragmentView.findViewById<LinearLayout>(R.id.notificationLinearLayout) ?: return null
+
+        notifDbRef.whereEqualTo("engineerId", loggedInId).get().addOnSuccessListener {
+            Log.d("notifications", "Displaying for $loggedInId, size: ${it.documents.size}")
+            it.documents.forEach{ doc ->
+                val cardView = layoutInflater.inflate(
+                    R.layout.notification_card,
+                    linearLayout,
+                    false
+                )
+                val desc = cardView.findViewById<TextView>(R.id.notificationDescription)
+                desc.text = doc.getString("description")
+                linearLayout.addView(cardView)
+            }
+        }
+        return fragmentView
     }
 
     companion object {

@@ -5,7 +5,7 @@
     <string-array name="Status">
         <item>Choose</item>
         <item>On Hold</item>
-        <item>Cancled</item>
+        <item>Cancelled</item>
         <item>Completed</item>
     </string-array>
 

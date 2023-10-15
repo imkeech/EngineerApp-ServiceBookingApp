@@ -12,11 +12,14 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class FirebasePushMessageHandler : FirebaseMessagingService() {
     private val CHANNEL_ID = "engineer-notification2"
+    private val eng = Firebase.firestore.collection("engineer-notifications")
 
     override fun onNewToken(token: String) {
         Log.d("fcm", "New Token: $token")
@@ -30,6 +33,7 @@ class FirebasePushMessageHandler : FirebaseMessagingService() {
         val loggedInId = sharedPref.getString("loggedInServiceEngineerId", "") ?: return
 
         val toEngineerId = remoteMessage.data["toEngineerId"]
+        val phoneNumber = remoteMessage.data["phoneNumber"]
         val destinationApp = remoteMessage.data["destination"]
         if (destinationApp != "engineer")
             return
@@ -40,6 +44,8 @@ class FirebasePushMessageHandler : FirebaseMessagingService() {
         )
 
         if (loggedInId == toEngineerId) {
+            val data = mapOf("description" to remoteMessage.data["description"], "engineerId" to loggedInId)
+            eng.add(data)
             Log.d("fcm", "SEnding notification")
             showNotification()
         }

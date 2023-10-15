@@ -140,9 +140,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun logout() {
-        val editor = sharedPref.edit()
-        editor.putString("loggedInServiceEngineerId", "")
-        editor.commit()
-    }
+
 }
