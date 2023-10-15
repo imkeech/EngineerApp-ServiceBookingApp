@@ -82,12 +82,19 @@ class MainActivity : AppCompatActivity() {
 
                 if (password == storedPassword) {
                     // Successful login
+                    val name = document.getString("name")
+                    val phoneNumber = document.getString("phoneNumber")
+
+                    // Now 'name' and 'phoneNumber' contain the service engineer's information
+                    Log.d("ServiceEngineer", "Name: $name, PhoneNumber: $phoneNumber")
+
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
 
                     val editor = sharedPref.edit()
-                    // Pass the email as an extra
                     editor.putString("loggedInServiceEngineerId", email)
-                    editor.commit()
+                    editor.putString("name", name)
+                    editor.putString("phoneNumber", phoneNumber)
+                    editor.apply()
 
                     // Start MainActivity2
                     checkAuth()
@@ -154,6 +161,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }
