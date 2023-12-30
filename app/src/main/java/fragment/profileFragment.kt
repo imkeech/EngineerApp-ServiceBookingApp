@@ -139,7 +139,26 @@ class profileFragment : Fragment() {
         profileName.text = name
         phonenumber.text = phonenumber1
 
+
+        var isEditing = false
         edit.setOnClickListener{
+            if(isEditing){
+                name1.visibility = View.VISIBLE
+                phone_no.visibility = View.VISIBLE
+                email.visibility = View.VISIBLE
+                Address.visibility = View.VISIBLE
+                City.visibility = View.VISIBLE
+                State.visibility = View.VISIBLE
+
+                Editname.visibility = View.GONE
+                Editphone_no.visibility = View.GONE
+                Editemail.visibility = View.GONE
+                Editaddress.visibility = View.GONE
+                Editcity.visibility = View.GONE
+                Editstate.visibility = View.GONE
+                savebutton.visibility = View.GONE
+            }
+            else{
             name1.visibility = View.GONE
             phone_no.visibility = View.GONE
             email.visibility = View.GONE
@@ -155,8 +174,47 @@ class profileFragment : Fragment() {
             Editcity.visibility = View.VISIBLE
             Editstate.visibility = View.VISIBLE
             savebutton.visibility = View.VISIBLE
+        }
+            isEditing = !isEditing
+        }
+
+        savebutton.setOnClickListener {
+            val newName = Editname.text.toString().trim()
+            val newEmail = Editemail.text.toString().trim()
+            val newAddress = Editaddress.text.toString().trim()
+            val newCity = Editcity.text.toString().trim()
+            val newState = Editstate.text.toString().trim()
+
+
+            if (newName.isNotEmpty() && newEmail.isNotEmpty() && newAddress.isNotEmpty()
+                && newCity.isNotEmpty() && newState.isNotEmpty() ) {
+
+                updateEngineerDetails(newName, newEmail, newAddress, newCity, newState)
+
+                name1.visibility = View.VISIBLE
+                phone_no.visibility = View.VISIBLE
+                email.visibility = View.VISIBLE
+                Address.visibility = View.VISIBLE
+                City.visibility = View.VISIBLE
+                State.visibility = View.VISIBLE
+
+                Editname.visibility = View.GONE
+                Editphone_no.visibility = View.GONE
+                Editemail.visibility = View.GONE
+                Editaddress.visibility = View.GONE
+                Editcity.visibility = View.GONE
+                Editstate.visibility = View.GONE
+                savebutton.visibility = View.GONE
+            } else {
+                // Handle the case where any field is empty
+                // You can show a Toast or an error message to the user
+                Toast.makeText(requireContext(), "Fill all the Details!", Toast.LENGTH_LONG).show()
+            }
 
         }
+
+
+
 
 
 
@@ -185,6 +243,44 @@ class profileFragment : Fragment() {
 
         return fragmentView
     }
+
+    private fun updateEngineerDetails(newName: String, newEmail: String, newAddress: String, newCity: String, newState: String) {
+        val sharedPrefs = activity?.getSharedPreferences("login-data", Context.MODE_PRIVATE)
+        val phonenumber1 = sharedPrefs?.getString("phoneNumber", "")
+
+        // Access the Firestore collection for Service Engineers
+        val serviceEngineerCollection = FirebaseFirestore.getInstance().collection("ServiceEngineer")
+
+        // Query to find the document with the corresponding phone number
+        val query = serviceEngineerCollection.whereEqualTo("phoneNumber", phonenumber1)
+
+        // Execute the query
+        query.get().addOnSuccessListener { querySnapshot ->
+            for (document in querySnapshot.documents) {
+                // Update the document with new values
+                document.reference.update(
+                    "name", newName,
+                    "email", newEmail,
+                    "address", newAddress,
+                    "city", newCity,
+                    "state", newState
+                ).addOnSuccessListener {
+                    // Document updated successfully
+                    // Show a Toast or perform any other action to indicate success
+                    Toast.makeText(requireContext(), "Details updated successfully!", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener { e ->
+                    // Handle failure while updating the document
+                    // Show an error message or perform necessary actions
+                    Toast.makeText(requireContext(), "Failed to update details: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }.addOnFailureListener { e ->
+            // Handle failure while executing the query
+            // Show an error message or perform necessary actions
+            Toast.makeText(requireContext(), "Failed to retrieve data: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 
 }
