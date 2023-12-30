@@ -9,6 +9,11 @@
     android:gravity="center"
     android:background="@color/white">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollable">
+
   <RelativeLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -29,12 +34,12 @@
 
       <TextView
           android:layout_width="match_parent"
-          android:layout_height="50dp"
+          android:layout_height="wrap_content"
           android:id="@+id/text"
           android:layout_marginTop="20dp"
           android:text="Karunambigai Info System and Services"
           android:textAlignment="center"
-          android:textSize="20dp"
+          android:textSize="17dp"
           android:textColor="@color/prjtred"
           android:layout_below="@+id/imglogo"
           android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
@@ -59,27 +64,14 @@
           android:padding="15dp"
           android:id="@+id/rl1"
           android:elevation="10dp">
-       <TextView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:id="@+id/head_login"
-           android:textColor="@color/black"
-           android:textSize="15dp"
-           android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-           android:textAlignment="center"
-           android:text="Please Enter your login details"
-
-           />
           <TextView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/service_id"
-              android:layout_below="@+id/head_login"
-              android:text="Service Id*"
+              android:text="Service Id"
               android:textColor="@color/black"
               android:textSize="16sp"
               android:padding="6dp"
-              android:layout_marginTop="20dp"
                />
           <EditText
               android:layout_width="match_parent"
@@ -98,7 +90,7 @@
               android:layout_height="wrap_content"
               android:id="@+id/service_pw"
               android:layout_below="@+id/service_id1"
-              android:text="Password*"
+              android:text="Password"
               android:textColor="@color/black"
               android:textSize="16sp"
               android:padding="6dp"
@@ -120,5 +112,6 @@
 
 
   </RelativeLayout>
+</ScrollView>
 
 </LinearLayout>

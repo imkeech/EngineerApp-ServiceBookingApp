@@ -58,6 +58,7 @@
                             android:id="@+id/profileName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
                             android:text="Customer Name"
                             android:textSize="25sp"
                             android:textStyle="bold"
@@ -335,37 +336,6 @@
                                                 android:paddingStart="5dp"/>
 
                                         </LinearLayout>
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content">
-                                            <TextView
-                                                android:id="@+id/infoText7"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="Pincode:"
-                                                android:visibility="visible"
-                                                android:textSize="15dp"
-                                                android:textStyle="bold"
-                                                />
-
-                                            <TextView
-                                                android:id="@+id/pincode"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="630561"
-                                                android:visibility="visible"
-                                                android:paddingStart="5dp"
-                                                android:textSize="15dp"
-                                                />
-                                            <EditText
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:hint="Pincode"
-                                                android:id="@+id/editpin"
-                                                android:visibility="gone"
-                                                android:paddingStart="5dp"/>
-
-                                        </LinearLayout>
 
                                         <Button
                                             android:layout_width="wrap_content"
@@ -417,51 +387,6 @@
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
-
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/trdButton"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:layout_marginStart="15dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginEnd="15dp"
-                                android:layout_marginBottom="15dp"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                android:background="@drawable/btn_background_1"
-                                android:drawableStart="@drawable/baseline_history_24"
-                                android:drawableEnd="@drawable/baseline_arrow_drop_down_24"
-                                android:drawablePadding="20dp"
-                                android:paddingStart="20dp"
-                                android:paddingEnd="20dp"
-                                android:text="History"
-                                android:textAlignment="viewStart"
-                                />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <LinearLayout
-                                    android:id="@+id/historyView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="15dp"
-                                    android:visibility="gone"
-                                    android:layout_marginEnd="15dp"
-                                    >
-                                    <LinearLayout
-                                        android:id="@+id/history"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical" >
-
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-                            </LinearLayout>
-
-
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

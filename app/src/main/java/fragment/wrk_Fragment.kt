@@ -20,7 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class wrk_Fragment : Fragment() {
     private lateinit var communicator: Communicator
     private lateinit var cardContainer: LinearLayout
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private var email: String = ""
     private lateinit var firestore: FirebaseFirestore
     private val cloudMessaging = CloudMessaging()
@@ -31,27 +30,21 @@ class wrk_Fragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_wrk_, container, false)
 
+        // Initialize the cardContainer
+        cardContainer = view.findViewById(R.id.cardContainer)
+
         // Retrieve the email value from the arguments
         email = arguments?.getString("email") ?: ""
 
-        // Get references to the SwipeRefreshLayout and the LinearLayout container
-        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
-        cardContainer = view.findViewById(R.id.cardContainer)
 
-        // Configure the SwipeRefreshLayout colors
-        swipeRefreshLayout.setColorSchemeColors(
-            ContextCompat.getColor(requireContext(), R.color.prjtred),
-            ContextCompat.getColor(requireContext(), R.color.prjtred3)
-        )
+        val refreshImageView = view.findViewById<ImageView>(R.id.refresh) // Find the ImageView by its ID
 
-        // Set a listener for the pull-to-refresh action
-        swipeRefreshLayout.setOnRefreshListener {
-            // Implement your refresh logic here
-            // This is where you can fetch new data or reload your fragment's content
-            // After completing the refresh, make sure to call swipeRefreshLayout.isRefreshing = false
-            // to stop the refreshing animation.
-            refreshData()
+        // Set an OnClickListener for the refresh ImageView
+        refreshImageView.setOnClickListener {
+            checkAssignedServiceEngineer(email)
+
         }
+
 
         // Check if email matches assignedServiceEngineerId
         if (email.isNotEmpty()) {
@@ -61,22 +54,11 @@ class wrk_Fragment : Fragment() {
         return view
     }
 
-    private fun refreshData() {
-        // Implement your data refreshing logic here
-        // This method will be called when the user pulls to refresh
-        // Once the refresh is complete, set swipeRefreshLayout.isRefreshing = false
-        // to stop the refreshing animation.
-        // You can update your UI or fetch new data here.
-
-        // For example, you can clear the existing cardContainer and reload the data
-        cardContainer.removeAllViews()
-        checkAssignedServiceEngineer(email)
-
-        // After refreshing, make sure to stop the refreshing animation
-        swipeRefreshLayout.isRefreshing = false
-    }
 
     private fun checkAssignedServiceEngineer(email: String) {
+        // Clear existing CardViews before adding new ones
+        cardContainer.removeAllViews()
+
         val firestore = FirebaseFirestore.getInstance()
         val serviceBookingRef = firestore.collection("Service_Booking")
 
